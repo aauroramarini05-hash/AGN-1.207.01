@@ -3,10 +3,9 @@ package com.xdustatom.auryxgamenews
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import com.xdustatom.auryxgamenews.ui.NewsScreen
+import com.xdustatom.auryxgamenews.ui.theme.AuryxGameNewsTheme
 
 class MainActivity : ComponentActivity() {
 
@@ -14,16 +13,14 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         setContent {
-            App()
+            AuryxGameNewsTheme {
+                App()
+            }
         }
     }
 }
 
 @Composable
 fun App() {
-    MaterialTheme {
-        Surface {
-            Text(text = "Auryx Game News")
-        }
-    }
+    NewsScreen()
 }
