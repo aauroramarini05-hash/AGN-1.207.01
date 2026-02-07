@@ -1,22 +1,17 @@
 package com.xdustatom.auryxgamenews.data
 
-data class NewsItem(
-    val title: String,
-    val description: String
-)
+import retrofit2.Retrofit
+import retrofit2.converter.simplexml.SimpleXmlConverterFactory
 
-object NewsRepository {
+class NewsRepository {
 
-    fun getNews(): List<NewsItem> {
-        return listOf(
-            NewsItem(
-                title = "Auryx Game News online",
-                description = "Build di test completata con successo."
-            ),
-            NewsItem(
-                title = "GTA VI",
-                description = "Nuove indiscrezioni sul prossimo capitolo Rockstar."
-            )
-        )
+    private val api: RssApi = Retrofit.Builder()
+        .baseUrl("https://feeds.ign.com/ign/")
+        .addConverterFactory(SimpleXmlConverterFactory.create())
+        .build()
+        .create(RssApi::class.java)
+
+    suspend fun fetchNews(): List<RssItem> {
+        return api.getIgnNews().channel?.items ?: emptyList()
     }
 }
