@@ -4,6 +4,10 @@ pluginManagement {
         mavenCentral()
         gradlePluginPortal()
     }
+
+    plugins {
+        id("org.jetbrains.kotlin.android") version "1.9.20"
+    }
 }
 
 dependencyResolutionManagement {
@@ -14,5 +18,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "Auryx Game News"
+rootProject.name = "AuryxGameNews"
 include(":app")
