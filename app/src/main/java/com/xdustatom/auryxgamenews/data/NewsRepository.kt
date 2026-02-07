@@ -1,39 +1,22 @@
 package com.xdustatom.auryxgamenews.data
 
-import com.prof18.rssparser.RssParser
-import com.prof18.rssparser.model.RssItem
-import com.xdustatom.auryxgamenews.model.NewsItem
+data class NewsItem(
+    val title: String,
+    val description: String
+)
 
-class NewsRepository {
-    private val parser = RssParser()
+object NewsRepository {
 
-    suspend fun fetchAll(): List<NewsItem> {
-        val all = mutableListOf<NewsItem>()
-
-        for (src in RssSources.sources) {
-            try {
-                val channel = parser.getRssChannel(src.url)
-                val items = channel.items ?: emptyList()
-                all += items.mapNotNull { it.toNewsItem(src.name) }
-            } catch (_: Exception) {
-                // ignore a single failing source
-            }
-        }
-
-        return all
-            .distinctBy { it.link }
-            .sortedWith(compareByDescending<NewsItem> { it.published ?: "" })
-    }
-
-    private fun RssItem.toNewsItem(sourceName: String): NewsItem? {
-        val t = title?.trim().orEmpty()
-        val l = link?.trim().orEmpty()
-        if (t.isBlank() || l.isBlank()) return null
-        return NewsItem(
-            title = t,
-            link = l,
-            source = sourceName,
-            published = pubDate?.trim()
+    fun getNews(): List<NewsItem> {
+        return listOf(
+            NewsItem(
+                title = "Auryx Game News online",
+                description = "Build di test completata con successo."
+            ),
+            NewsItem(
+                title = "GTA VI",
+                description = "Nuove indiscrezioni sul prossimo capitolo Rockstar."
+            )
         )
     }
 }
